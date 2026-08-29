@@ -1,0 +1,32 @@
+vector<int> lexicographicallySmallestArray(vector<int>& nums, int limit) {
+        int n=nums.size();
+        vector<int>grps=nums;
+        sort(grps.begin(),grps.end());
+        unordered_map<int,vector<int>>group;
+        unordered_map<int,int>belong;
+        unordered_map<int,int>mini;
+        int id=1;
+        group[id].push_back(grps[0]);
+        for(int i=1;i<n;i++){
+            if(grps[i]-grps[i-1]>limit){
+                id++;
+            }
+            group[id].push_back(grps[i]);
+        }
+        id=1;
+        for(int i=0;i<n;i++){
+            if(i>0 && grps[i]-grps[i-1]>limit){
+                id++;
+            }
+            belong[grps[i]]=id;
+        }
+        for(int i=1;i<=id;i++){
+            mini[i]=0;
+        }
+        for(int i=0;i<n;i++){
+            int grpId=belong[nums[i]];
+            nums[i]=group[grpId][mini[grpId]];
+            mini[grpId]++;
+        }
+        return nums;
+    }
