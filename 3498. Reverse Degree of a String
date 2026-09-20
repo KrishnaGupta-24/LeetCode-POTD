@@ -1,0 +1,10 @@
+int reverseDegree(string s) {
+        int ans=0;
+        for(int i=0;i<s.size();i++){
+            int x=s[i]-'a';
+            int temp=26-x;
+            int j=i+1;
+            ans+=j*temp;
+        }
+        return ans;
+    }
