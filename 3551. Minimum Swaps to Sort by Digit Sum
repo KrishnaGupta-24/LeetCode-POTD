@@ -1,0 +1,34 @@
+int func(int n){
+        int sum=0;
+        while(n>0){
+            int rem=n%10;
+            sum+=rem;
+            n=n/10;
+        }
+        return sum;
+    }
+    int minSwaps(vector<int>& nums) {
+        int n=nums.size();
+        vector<pair<pair<int,int>,int>>arr;
+        for(int i=0;i<n;i++){
+            arr.push_back({{func(nums[i]),nums[i]},i});
+        }
+        sort(arr.begin(),arr.end());
+        vector<bool>vis(n,false);
+
+        int ans=0;
+        for(int i=0;i<n;i++){
+            if(vis[i]||arr[i].second==i){
+                continue;
+            }
+            int cycle=0;
+            int j=i;
+            while(!vis[j]){
+                vis[j]=true;
+                j=arr[j].second;
+                cycle++;
+            }
+            ans+=cycle-1;
+        }
+        return ans;
+    }
